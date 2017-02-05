@@ -73,13 +73,23 @@
 		}//fin editarPerfil
 
 		public function editarOk(){
+			$id = $this->session->userdata('usrId');
+        	$campos = $this->defaultbackend_model->getUsuarioById($id);
+
 			//Se recuperan los datos del formulario
         	$nombre = $this->input->post('nombre');
         	$apellido = $this->input->post('apellido');
         	$fecnac = date("Y-m-d",strtotime($this->input->post('fechanac')));
         	$bio = $this->input->post('bio');
         	$email = $this->input->post('email');
-        	$foto = $this->input->post('foto');
+        	if($campos->foto_perfil == ''){
+				$foto = $this->input->post('foto');
+        	}else if($campos->foto_perfil != '' && $this->input->post('foto') != ''){
+        		$foto = $this->input->post('foto');
+        	}else if($campos->foto_perfil != '' && $this->input->post('foto') == ''){
+        		$foto = $campos->foto_perfil;
+        	}
+
         	$uid = $this->input->post('uid');
 
         	return $this->usuariolib->actualizarPerfil($nombre, $apellido, $fecnac, $bio, $uid, $foto);
