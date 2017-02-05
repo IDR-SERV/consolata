@@ -95,6 +95,30 @@
         	return $this->usuariolib->actualizarPerfil($nombre, $apellido, $fecnac, $bio, $uid, $foto);
 		}
 
+		public function activarCuenta(){
+			//Se validan los campos del formulario
+			$this->form_validation->set_rules('email', 'Email', 'required|callback_activarCuentaPost');
+			$this->form_validation->set_rules('pass', 'Password', 'required|matches[passRep]');
+			$this->form_validation->set_rules('passRep', 'Password', 'required');
+
+			if($this->form_validation->run() == FALSE){
+				redirect(base_url());
+			}else{
+				redirect('perfil');
+			}
+		}//fin de activarCuenta
+
+		public function activarCuentaPost(){
+			//Se recuperan los datos ingresados en el formulario
+			$email = $this->input->post('email');
+			$pass = $this->input->post('pass');
+			$passRep = $this->input->post('passRep');
+
+			//se llama a la funcion que activa la cuenta
+			return $this->usuariolib->activarCuentaUsuario($email, md5($pass), md5($passRep));
+
+		}//fin de activarCuentaPost
+
 
 	}//fin de la clase
 ?>

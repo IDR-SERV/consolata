@@ -34,6 +34,17 @@
 			
 		}//fin de login
 
+		public function get_nivel_usuario($id){
+			$this->CI->db->select('nombre nivel');
+			$this->CI->db->from('nivel');
+			$this->CI->db->join('usuario', 'usuario.nivel_id = nivel.id');
+			$this->CI->db->where('usuario.id',$id);
+			$consulta = $this->CI->db->get();
+			$resultado = $consulta->row();
+			$rs = $resultado->nivel;
+			return $rs;
+		}//fin getNivelUsuario
+
 		public function actualizarPerfil($name, $lastName, $bDate, $bio, $uid, $foto){
 			//Se verifica primeramente que el usuario este logueado
 			if($this->CI->session->userdata('usrId') == null){
@@ -60,16 +71,22 @@
 			redirect('perfil');
 		}//fin de actualizar perfil
 
-		public function get_nivel_usuario($id){
-			$this->CI->db->select('nombre nivel');
-			$this->CI->db->from('nivel');
-			$this->CI->db->join('usuario', 'usuario.nivel_id = nivel.id');
-			$this->CI->db->where('usuario.id',$id);
-			$consulta = $this->CI->db->get();
-			$resultado = $consulta->row();
-			$rs = $resultado->nivel;
-			return $rs;
-		}//fin getNivelUsuario
+		public function activarCuentaUsuario($email, $pass, $passRep){
+			//se verifica la existencia del email en la base de datos
+			$mail = $this->CI->def->getUsuarioByEmail($email);
+			//se crea el array con los datos que se modificarán
+			$data = array(
+				'email' => $email,
+				'pass' => $passRep,
+				'activado' => '1'
+			);
+			if(!$mail){
+				redirect(base_url());
+			}else{
+				$this->CI->def->update($data);
+				redirect('login');
+			}
+		}
 	}
 
 ?>

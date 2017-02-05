@@ -12,7 +12,7 @@
 	<div class="box-header with-border">
 		<h1>Activaci&oacute;n de cuenta</h1>
 	</div>
-	<form role="form">
+	<form role="form" action="perfilController/activarCuenta" method="post">
 		<div class="box-body">
 			<div class="form-group">
 				<label for="exampleInputEmail1">Email address</label>
