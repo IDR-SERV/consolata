@@ -35,7 +35,7 @@
           <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
+              <span class="label label-danger">4</span>
             </a>
             <ul class="dropdown-menu">
               <li class="header">Solicitudes de aprobación de Recarga</li>
@@ -173,69 +173,31 @@
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
+      <!--===============================================================================================================-->
+      <!--Menu-->
+      <!--===============================================================================================================-->
       <ul class="sidebar-menu">
         <li class="header">MENU</li>
-        <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Clientes</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+        <?php foreach($partentMenu as $parent):?>
+          <li class="active treeview"><a href="#"><i class="<?= $parent->clase ? $parent->clase : ''; ?>"></i> <span><?= $parent->name?$parent->name:''; ?></span>
+          <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+          </span>
           </a>
-          <ul class="treeview-menu">
-            <li id="mn-empleado"><a href="#"><i class="fa fa-circle-o"></i> Empleados</a></li>
-            <li id="mn-representante"><a href="#"><i class="fa fa-circle-o"></i> Representantes</a></li>
-            <li id="mn-estudiante"><a href="#"><i class="fa fa-circle-o"></i> Estudiantes</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-list"></i>
-            <span>Productos</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">3</span>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Alim. procesados</a></li>
-            <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i>Alim. no procesados</a></li>
-            <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Otros productos</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#">
-            <i class="fa fa-credit-card"></i> <span>Facturaci&oacute;n</span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-bar-chart"></i>
-            <span>Inventario</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Art&iacute;culos consumibles</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Alimentos procesados</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>Reportes</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Facturaci&oacute;n</a></li>
-            <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Recargas</a></li>
-            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Ganancias y p&eacute;rdidas</a></li>
-            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inventario</a></li>
-          </ul>
-        </li>
+          <?php if(count($this->menu_model->childMenu($parent->id)) > 0) { ?>
+            <ul class="treeview-menu">
+              <?php foreach($this->menu_model->childMenu($parent->id) as $child) { ?>
+              <li><a href="<?= $child->path ?>"><i class="<?= $child->clase?$child->clase:'fa fa-circle-o' ?>"></i> <?= $child->name?$child->name:''; ?></a></li>
+              <?php } ?>
+            </ul>
+          <?php } ?>
+          </li>
+        <?php endforeach ?>
+
       </ul>
+      <!--===============================================================================================================-->
+      <!--Menu-->
+      <!--===============================================================================================================-->
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -245,8 +207,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Escritorio
-        <small>Instituci&oacute;n</small>
+        <?= $seccion ?>
+        <small><?= $descripcion_seccion ?></small>
       </h1>
     </section>
 
@@ -282,7 +244,9 @@
     <!-- Create the tabs -->
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
         <li><a href="#control-sidebar-home-tab" id="menu-derecha-home" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        <?php if($nivel == 'ADMINISTRADOR') {?>
+        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        <?php }?>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -360,6 +324,7 @@
       </div>
       <!-- /.tab-pane -->
       <!-- Stats tab content -->
+      <?php if($nivel == 'ADMINISTRADOR') {?>
       <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
       <!-- /.tab-pane -->
       <!-- Settings tab content -->
@@ -368,51 +333,16 @@
           <h3 class="control-sidebar-heading">Configuraciones</h3>
 
           <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Descuentos
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              <div class="input-group">
-                <span class="input-group-addon" id="sizing-addon2">%</span>
-                <input type="text" class="form-control" placeholder="Descuento" aria-describedby="sizing-addon2">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">
-                        <span class="fa fa-save text-success"></span>
-                    </button>
-                  </span>
-              </div>
-            <br>
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              I.V.A.
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              <div class="input-group">
-                <span class="input-group-addon" id="sizing-addon2">%</span>
-                <input type="text" class="form-control" placeholder="I.V.A." aria-describedby="sizing-addon2">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">
-                      <span class="fa fa-save text-success"></span>
-                  </button>
-                  </span>
-              </div>
-            <br>
-            </p>
+              <p>
+                  <button class="btn btn-primary" style="width: 100%;">Crear Usuario</button>
+              </p>
           </div>
           
           <hr class="text-success"/>
           <!-- /.form-group -->
           <div class="form-group">
               <p>
-                  <button class="btn btn-success" style="width: 100%;">Establecer Permisos</button>
+                  <button class="btn btn-primary" style="width: 100%;">Establecer Permisos</button>
               </p>
           </div>
           
@@ -424,7 +354,7 @@
                 <input type="text" class="form-control" placeholder="Buscar" aria-describedby="sizing-addon2">
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button">
-                      <span class="fa fa-binoculars text-success"></span>
+                      <span class="fa fa-binoculars text-primary"></span>
                   </button>
                   </span>
               </div>
@@ -451,6 +381,7 @@
         </form>
       </div>
       <!-- /.tab-pane -->
+      <?PHP }?>
     </div>
   </aside>
   <!-- /.control-sidebar -->

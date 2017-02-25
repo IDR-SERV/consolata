@@ -69,9 +69,28 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 -- ----------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `menus`;
+CREATE TABLE menus(
+    id int(11) NOT null PRIMARY KEY AUTO_INCREMENT,
+    name varchar(50) DEFAULT NULL,
+    parentId int(11) DEFAULT null,
+    path varchar(50) DEFAULT null,
+    clase varchar(100) DEFAULT null,
+    icon varchar(50) DEFAULT null,
+    order_menu int(6)
+)ENGINE INNODB;
+-- ----------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `noticias`;
+CREATE TABLE noticias (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(50) NOT NULL,
+    contenido TEXT,
+    id_usuario INT,
+    fecha_creacion DATETIME,
+    fecha_actualizacion DATETIME
+) ENGINE INNODB;
 
-
-
+-- ----------------------------------------------------------------------------------------------
 
 -- ----------------------------------------------------------------------------------------------
 -- Registros
@@ -81,6 +100,10 @@ INSERT INTO `mensajes_bienvenida` VALUES ('1','Cristo.png','No tengais miedo','2
 
 INSERT INTO `usuario` VALUES ('1', 'JEMEL.DAVALILLO@GMAIL.COM','J21D','827ccb0eea8a706c4c34a16891f84e7b', 1, '2017-01-28 17:31:41','0000-00-00 00:00:00');
 
+-- ----------------------------------------------------------------------------------------------
+-- MODIFICACIONES A LAS TABLAS
+-- ----------------------------------------------------------------------------------------------
+
 ALTER TABLE `usuario` ADD FOREIGN KEY (`nivel_id`) REFERENCES `consolata`.`nivel`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE `menu_nivel` ADD FOREIGN KEY (`menu_id`) REFERENCES `consolata`.`menu`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
@@ -88,3 +111,5 @@ ALTER TABLE `menu_nivel` ADD FOREIGN KEY (`menu_id`) REFERENCES `consolata`.`men
 ALTER TABLE `menu_nivel` ADD FOREIGN KEY (`nivel_id`) REFERENCES `consolata`.`nivel`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE `tb_perfil` ADD FOREIGN KEY (`usuario_id`) REFERENCES `consolata`.`usuario`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `noticias` ADD `imagen` VARCHAR(100) NOT NULL AFTER `contenido`;

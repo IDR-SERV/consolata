@@ -1,12 +1,11 @@
 <?php
 if(!defined('BASEPATH')) exit('No direct script access allowed');
-
+//A.M.D.G.
 class Defaultbackend extends CI_Controller {
     
     function __construct(){
         parent::__construct();
         $this->load->helper('url');
-        $this->load->model('defaultbackend_model');
         $this->load->library('UsuarioLib');
 
         /*MENSAJES PERSONALIZADOS PARA EL ERROR EN EL LOGIN*/
@@ -22,9 +21,11 @@ class Defaultbackend extends CI_Controller {
         $id = $this->session->userdata('usrId');
         $campos = $this->defaultbackend_model->getUsuarioById($id);
 
+        $data['partentMenu'] = $this->menu_model->partentMenu();
         $data['contenido'] = 'backend/default';//carpeta/vista
         $data['titulo'] = 'Escritorio';
-        $data['menu'] = $this->defaultbackend_model->cargaMenu();
+        $data['seccion'] = $data['titulo'];
+        $data['descripcion_seccion'] = 'Bienvenido al sistema';
         $data['bienvenida'] = $this->defaultbackend_model->cargaMensajeBienvenida();
         $data['css'] = $this->inicializar->addCss();
         $data['js'] = $this->inicializar->addJs();
@@ -34,6 +35,7 @@ class Defaultbackend extends CI_Controller {
         $data['name'] = $campos!=null?$campos->nombre:'Configure su perfil';
         $data['lastName'] = $campos!=null?$campos->apellido:'';
         $data['foto'] = $campos!=null?$campos->foto_perfil:base_url() . 'avatar5.png';
+        $data['nivel'] = $this->usuariolib->get_nivel_usuario($id);
 
         if($this->session->userdata('activo') == 1)
             $this->load->view('backend/template', $data);  

@@ -16,7 +16,7 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
         $this->db->where('email',$registro['email']);
         $this->db->update('usuario');
         }
-        
+        /*
         function cargaMenu(){
             $this->db->select('m.glosa_menu');
             $this->db->from('tb_menu m');
@@ -37,7 +37,7 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
             $resultado = $consulta->row();
             return $resultado;
         }
-
+        */
         function cargaMensajeBienvenida(){
             $this->db->select('imagen,mensaje');
             $this->db->from('mensajes_bienvenida');

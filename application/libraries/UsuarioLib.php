@@ -45,6 +45,17 @@
 			return $rs;
 		}//fin getNivelUsuario
 
+		public function get_id_nivel_usuario($id){
+			$this->CI->db->select('nivel.id');
+			$this->CI->db->from('nivel');
+			$this->CI->db->join('usuario', 'usuario.nivel_id = nivel.id');
+			$this->CI->db->where('usuario.id',$id);
+			$consulta = $this->CI->db->get();
+			$resultado = $consulta->row();
+			$rs = $resultado->id;
+			return $rs;
+		}//fin getNivelUsuario
+
 		public function actualizarPerfil($name, $lastName, $bDate, $bio, $uid, $foto){
 			//Se verifica primeramente que el usuario este logueado
 			if($this->CI->session->userdata('usrId') == null){
@@ -60,7 +71,6 @@
 				'apellido' => $lastName,
 				'fecha_nacimiento' => $bDate,
 				'detalle_biografia' => $bio,
-				'foto_perfil' => $foto,
 				'usuario_id' => $uid
 			);
 			if(!$perfil){
@@ -70,6 +80,28 @@
 			}
 			redirect('perfil');
 		}//fin de actualizar perfil
+
+		public function actualizarFoto($uid, $foto){
+			//Se verifica primeramente que el usuario este logueado
+			if($this->CI->session->userdata('usrId') == null){
+				return false;
+			}
+			//Se llaman los metodos de los modelos
+			$id = $this->CI->session->userdata('usrId');
+			$usuario = $this->CI->def->getUsuarioById($id);
+			$perfil = $this->CI->perfil->find($id);
+			//verificamos la existencia de este usuario en la tabla perfil
+			$data = array(
+				'foto_perfil' => $foto,
+				'usuario_id' => $id
+			);
+			if(!$perfil){
+				$this->CI->perfil->insert($data);
+			}else{
+				$this->CI->perfil->update($data);
+			}
+			redirect('perfil');
+		}//fin de actualizar foto
 
 		public function activarCuentaUsuario($email, $pass, $passRep){
 			//se verifica la existencia del email en la base de datos

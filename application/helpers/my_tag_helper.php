@@ -12,6 +12,6 @@
 				$salida .= '</div>';
 			}
 			return $salida;
-		}
+		}//fin de la funcion
 	}
 ?>

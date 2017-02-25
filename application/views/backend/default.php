@@ -15,11 +15,7 @@
     <?php } ?>
 </div>
 <div class="row col-md-2">
-    <?php foreach($menu as $mn){ ?>
-        <ul class="treeview-menu">
-            <li><i class="fa fa-circle-o"></i> <?= $mn->glosa_menu ?></li>
-        </ul>
-    <?php } ?>
+    
 </div>
 </div>
 

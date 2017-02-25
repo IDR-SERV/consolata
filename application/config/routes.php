@@ -59,5 +59,6 @@ $route['escritorio'] = 'defaultbackend/index';
 $route['perfil'] = 'perfilController/index';
 $route['salir'] = 'defaultbackend/salir';
 $route['activacion-cuenta'] = 'defaultbackend/activacion';
+$route['noticias'] = 'noticiasController/index';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
