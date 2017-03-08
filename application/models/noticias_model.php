@@ -33,6 +33,15 @@
 			$this->db->delete('noticias');
 		}
 
+		public function tablaNoticias(){
+			$this->db->select('noticias.titulo, usuario.email, noticias.contenido, noticias.fecha_creacion');
+			$this->db->from('noticias');
+			$this->db->join('usuario', 'usuario.id = noticias.id_usuario');
+			$consulta = $this->db->get();
+			$resultado = $consulta->result();
+			return $resultado;
+		}
+
 		
 
 	}//fin de la clase

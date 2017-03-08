@@ -32,6 +32,7 @@ class Defaultbackend extends CI_Controller {
         $data['img'] = $this->inicializar->addImg();
         $data['pic'] = $this->inicializar->addPic();
         $data['plg'] = $this->inicializar->addPlg();
+        $data['fnt'] = $this->inicializar->addFrontFonts();
         $data['name'] = $campos!=null?$campos->nombre:'Configure su perfil';
         $data['lastName'] = $campos!=null?$campos->apellido:'';
         $data['foto'] = $campos!=null?$campos->foto_perfil:base_url() . 'avatar5.png';
@@ -50,6 +51,7 @@ class Defaultbackend extends CI_Controller {
         $data['css'] = $this->inicializar->formCss();
         $data['fonts'] = $this->inicializar->formFonts();
         $data['img'] = $this->inicializar->formImg();
+        $data['fnt'] = $this->inicializar->addFrontFonts();
         $this->load->view('backend/login', $data);
     }
 
@@ -88,6 +90,7 @@ class Defaultbackend extends CI_Controller {
         $data['css'] = $this->inicializar->addCss();
         $data['js'] = $this->inicializar->addJs();
         $data['plg'] = $this->inicializar->addPlg();
+        $data['fnt'] = $this->inicializar->addFrontFonts();
         $this->load->view('backend/activacion',$data);
     }
 

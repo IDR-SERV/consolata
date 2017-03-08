@@ -1,4 +1,7 @@
-<!-- Main content -->
+<!-- A. M. D. G. -->
+<script type="text/javascript">
+  <?= $ajax."noticias.js" ?> 
+</script>
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
@@ -18,10 +21,11 @@
                 </tr>
                 </thead>
                 <tbody>
+                <?php foreach($noticias as $fila) {?>
                 <tr>
-                  <td><?= $titulo_noticia ?></td>
-                  <td><?= $autor_noticia ?></td>
-                  <td><?= $fecha_noticia ?></td>
+                  <td><?= $fila->titulo ?></td>
+                  <td><?= $fila->email ?></td>
+                  <td><?= $fila->fecha_creacion ?></td>
                   <td style="width: 130px; text-align: center;">
                     <a href="#" title="Leer"><i class="glyphicon glyphicon-eye-open text-success"></i></a>
                     &nbsp;
@@ -32,6 +36,7 @@
                     <?php } ?>
                   </td>
                 </tr>
+                <?php } ?>
                 <tr>
                 </tbody>
               </table>
@@ -46,7 +51,10 @@
     </section>
 
 
-
+    <!--
+    ESTE ES EL MODAL DONDE SE CARGA LA NOTICIA
+    Este modal se cargará con un ajax
+    -->
      <div class="modal modal-primary fade" id="modal_nueva_noticia" tabindex="-1" hidden="true" role="dialog">
       <div class="modal-dialog"> 
         <div class="modal-content">
@@ -57,24 +65,24 @@
             <small class="pull-right"><b>Autor: <?= $this->session->userdata('user')?></b></small>
           </div>
           <div class="modal-body">
-              <form>
+              <form name="frm_noticias" id="frm_noticias" action="noticiasController/nuevo" method="post">
                 <div class="form-group">
                   <label>Título</label>
-                  <input type="text" class="form-control" placeholder="Ingrese el título...">
+                  <input name="titulo_noticia" id="titulo_noticia" type="text" class="form-control" placeholder="Ingrese el título...">
                 </div>
                  <div class="form-group">
                   <label>Imágen</label>
-                  <input type="file">
+                  <input name="foto_noticia" id="foto_noticia" type="file">
                 </div>
                 <div class="form-group">
                   <label>Contenido</label>
-                  <textarea class="form-control" rows="12" placeholder="Escriba el contenido..."></textarea>
+                  <textarea name="contenido_noticia" id="contenido_noticia" class="form-control" rows="12" placeholder="Escriba el contenido..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+                    <button name="guardar_noticia" id="guardar_noticia" type="submit" class="btn btn-outline">Guardar</button>
                 </div>
               </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-outline">Guardar</button>
           </div>
         </div>
         <!-- /.modal-content -->
@@ -91,7 +99,7 @@ function m_nueva_noticia(){
 }
 
 
-  $(function () {
+  $(document).ready(function () {
     $("#example1").DataTable();
     $('#example2').DataTable({
       "paging": true,
@@ -101,5 +109,6 @@ function m_nueva_noticia(){
       "info": true,
       "autoWidth": false
     });
+
   });
 </script>

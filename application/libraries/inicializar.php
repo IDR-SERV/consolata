@@ -109,5 +109,11 @@
             $data .= base_url() . 'assets/forms/images/';
             return $data;
         }
+
+        public function addAjax(){
+            $data = '';
+            $data .= base_url() . 'assets/js/ajax/';
+            return $data;
+        }
     }
 ?>

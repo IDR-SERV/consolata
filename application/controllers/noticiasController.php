@@ -12,7 +12,7 @@ class NoticiasController extends CI_Controller {
     public function index(){
     	$id = $this->session->userdata('usrId');
         $campos = $this->defaultbackend_model->getUsuarioById($id);
-        $noticias = $this->noticias_model->all();
+        $noticias = $this->noticias_model->tablaNoticias();
 
         $data['partentMenu'] = $this->menu_model->partentMenu();
         $data['contenido'] = 'backend/noticias/index';//carpeta/vista
@@ -24,18 +24,47 @@ class NoticiasController extends CI_Controller {
         $data['img'] = $this->inicializar->addImg();
         $data['pic'] = $this->inicializar->addPic();
         $data['plg'] = $this->inicializar->addPlg();
+        $data['fnt'] = $this->inicializar->addFrontFonts();
+        $data['ajax'] = $this->inicializar->addAjax();
         $data['name'] = $campos!=null?$campos->nombre:'Configure su perfil';
         $data['lastName'] = $campos!=null?$campos->apellido:'Configure su perfil';
         $data['foto'] = $campos!=null?$campos->foto_perfil:base_url() . 'avatar5.png';
         $data['nivel'] = $this->usuariolib->get_nivel_usuario($id);
-        $data['titulo_noticia'] = $noticias != null?$noticias->titulo:'';
-        $data['autor_noticia'] = $noticias != null?$noticias->autor:'';
-        $data['contenido_noticia'] = $noticias != null?$noticias->contenido:'';
-        $data['fecha_noticia'] = $noticias != null?$noticias->fecha:'';
-
+        $data['cantidad_noticias'] = count($noticias);
+        $data['noticias'] = $noticias;
         $this->load->view('backend/template',$data);
 
     }//fin de la funcion index
+
+    public function nuevo(){
+        //Verificar que el usuario este logueado
+        if($this->session->userdata('usrId') == null){
+            return false;
+        }
+        //para cargar la foto de la noticia
+        $config['upload_path']          =  './assets/pictures/';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 200000;
+        $config['max_width']            = 2780;
+        $config['max_height']           = 1024;
+        $config['overwrite']            = TRUE;
+        $this->load->library('upload', $config);
+
+        $field_name =  $this->input->post('titulo_noticia');
+        $this->upload->do_upload($field_name);
+
+        //Capturar los valores del formulario
+        $datos = array(
+            'titulo' => $this->input->post('titulo_noticia'),
+            'contenido' => $this->input->post('contenido_noticia'),
+            'imagen' => $this->input->post('foto_noticia'),
+            'id_usuario' => $this->session->userdata('usrId'),
+            'fecha_creacion' => now()
+        ); 
+        //se llama al metodo del modelo y se le pasa el parametro
+        $this->noticias_model->insert($datos);
+        redirect('noticias');
+    }//fin de la funcion
 
 }//fin de la clase
 ?>

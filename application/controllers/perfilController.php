@@ -25,6 +25,7 @@
 	        $data['img'] = $this->inicializar->addImg();
 	        $data['pic'] = $this->inicializar->addPic();
 	        $data['plg'] = $this->inicializar->addPlg();
+	        $data['fnt'] = $this->inicializar->addFrontFonts();
 	        $data['name'] = $campos!=null?$campos->nombre:'Configure su perfil';
 	        $data['lastName'] = $campos!=null?$campos->apellido:'Configure su perfil';
 	        $data['foto'] = $campos!=null?$campos->foto_perfil:base_url() . 'avatar5.png';
@@ -51,6 +52,7 @@
 	        $data['img'] = $this->inicializar->addImg();
 	        $data['pic'] = $this->inicializar->addPic();
 	        $data['plg'] = $this->inicializar->addPlg();
+	        $data['fnt'] = $this->inicializar->addFrontFonts();
 	        $data['name'] = $campos!=null?$campos->nombre:'Configure su perfil';
 	        $data['lastName'] = $campos!=null?$campos->apellido:'Configure su perfil';
 	        $data['foto'] = $campos!=null?$campos->foto_perfil:'';
