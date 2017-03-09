@@ -35,6 +35,7 @@
             $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>';
             $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>';
             $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/fastclick/fastclick.js" type="text/javascript"></script>';
+            $data .= '<script src="' . base_url() . 'assets/js/bootstrap-filestyle.min.js" type="text/javascript"></script>';
             $data .= '<script src="' . base_url() . 'assets/js/app.min.js" type="text/javascript"></script>';
 
             return $data;

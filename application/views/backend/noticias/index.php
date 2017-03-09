@@ -16,15 +16,20 @@
                 <tr>
                   <th>Título</th>
                   <th>Autor</th>
+                  <th>Agregar imagen</th>
                   <th>Fecha</th>
                   <th style="width: 130px; text-align: center;">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
+                <?php if(!$noticias){ ?>
+                <tr><td colspan="5" class="text-primary text-center"><h1>NO HAY REGISTROS CARGADOS</h1></td></tr>
+                <?php }else{ ?>
                 <?php foreach($noticias as $fila) {?>
                 <tr>
                   <td><?= $fila->titulo ?></td>
                   <td><?= $fila->email ?></td>
+                  <td><button id="selector-imagen" class="btn btn-success">Seleccione</button></td>
                   <td><?= $fila->fecha_creacion ?></td>
                   <td style="width: 130px; text-align: center;">
                     <a href="#" title="Leer"><i class="glyphicon glyphicon-eye-open text-success"></i></a>
@@ -36,7 +41,7 @@
                     <?php } ?>
                   </td>
                 </tr>
-                <?php } ?>
+                <?php } }?>
                 <tr>
                 </tbody>
               </table>
@@ -69,10 +74,6 @@
                 <div class="form-group">
                   <label>Título</label>
                   <input name="titulo_noticia" id="titulo_noticia" type="text" class="form-control" placeholder="Ingrese el título...">
-                </div>
-                 <div class="form-group">
-                  <label>Imágen</label>
-                  <input name="foto_noticia" id="foto_noticia" type="file">
                 </div>
                 <div class="form-group">
                   <label>Contenido</label>
@@ -109,6 +110,8 @@ function m_nueva_noticia(){
       "info": true,
       "autoWidth": false
     });
+
+    $(":file").filestyle('buttonText', 'Seleccione Imagen');
 
   });
 </script>

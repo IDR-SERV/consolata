@@ -7,6 +7,15 @@ class NoticiasController extends CI_Controller {
         $this->load->helper('url');
         $this->load->model('noticias_model'); 
         $this->load->library('UsuarioLib');
+
+
+        $config['upload_path']          =  './assets/pictures/';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 200000;
+        $config['max_width']            = 2780;
+        $config['max_height']           = 1024;
+        $config['overwrite']            = TRUE;
+        $this->load->library('upload', $config);
     }
 
     public function index(){
@@ -41,29 +50,26 @@ class NoticiasController extends CI_Controller {
         if($this->session->userdata('usrId') == null){
             return false;
         }
-        //para cargar la foto de la noticia
-        $config['upload_path']          =  './assets/pictures/';
-        $config['allowed_types']        = 'gif|jpg|png';
-        $config['max_size']             = 200000;
-        $config['max_width']            = 2780;
-        $config['max_height']           = 1024;
-        $config['overwrite']            = TRUE;
-        $this->load->library('upload', $config);
-
-        $field_name =  $this->input->post('titulo_noticia');
-        $this->upload->do_upload($field_name);
 
         //Capturar los valores del formulario
         $datos = array(
             'titulo' => $this->input->post('titulo_noticia'),
             'contenido' => $this->input->post('contenido_noticia'),
-            'imagen' => $this->input->post('foto_noticia'),
             'id_usuario' => $this->session->userdata('usrId'),
             'fecha_creacion' => now()
         ); 
         //se llama al metodo del modelo y se le pasa el parametro
         $this->noticias_model->insert($datos);
         redirect('noticias');
+    }//fin de la funcion
+
+    public function cargar_imagen($field_name){
+         //Se verifica primeramente que el usuario este logueado
+        if($this->CI->session->userdata('usrId') == null){
+            return false;
+        }
+
+        $this->upload->do_upload($field_name);
     }//fin de la funcion
 
 }//fin de la clase
