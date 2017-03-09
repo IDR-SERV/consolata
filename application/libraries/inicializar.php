@@ -25,8 +25,8 @@
             $data .= '<script src="' . base_url() . 'assets/js/jquery-ui-1.12.1.custom/jquery-ui.min.js" type="text/javascript"></script>';
             $data .= '<script src="' . base_url() . 'assets/js/bootstrap.min.js" type="text/javascript"></script>';
             $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/morris/morris.min.js" type="text/javascript"></script>';
-            $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>';
             $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>';
+             $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>';
             $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>';
             $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>';
             $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>';
@@ -35,7 +35,9 @@
             $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>';
             $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>';
             $data .= '<script src="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/fastclick/fastclick.js" type="text/javascript"></script>';
+            $data .= '<script src="' . base_url() . 'assets/js/bootstrap-filestyle.min.js" type="text/javascript"></script>';
             $data .= '<script src="' . base_url() . 'assets/js/app.min.js" type="text/javascript"></script>';
+
             return $data;
         }
         
@@ -66,8 +68,7 @@
         
         public function addPlg(){
             $data = '<link href="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css"/>';
-            $data .= '<link href="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/datatables/jquery.dataTables.css" rel="stylesheet" type="text/css"/>';
-            $data .= '<link href="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>';
+            $data .= '<link href="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>';
             $data .= '<link href="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>';
             $data .= '<link href="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css"/>';
             $data .= '<link href="' . base_url() . 'assets/AdminLTE-2.3.7/plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>';
@@ -107,6 +108,12 @@
         public function formImg(){
             $data = '';
             $data .= base_url() . 'assets/forms/images/';
+            return $data;
+        }
+
+        public function addAjax(){
+            $data = '';
+            $data .= base_url() . 'assets/js/ajax/';
             return $data;
         }
     }

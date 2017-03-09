@@ -14,6 +14,7 @@ class LoginController extends CI_Controller {
 			$data['css'] = $this->inicializar->formCss();
 	        $data['fonts'] = $this->inicializar->formFonts();
 	        $data['img'] = $this->inicializar->formImg();
+	        $data['fnt'] = $this->inicializar->addFrontFonts();
             $this->load->view('backend/login',$data);
 	}
 }

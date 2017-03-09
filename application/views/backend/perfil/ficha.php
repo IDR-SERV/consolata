@@ -14,8 +14,9 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="<?=$foto != ''?$pic.$foto:$pic.'avatar5.png'?>" alt="User profile picture" style="width:90px; height: 90px;">
 
+              <img class="profile-user-img img-responsive img-circle" src="<?=$foto != ''?$pic.$foto:$pic.'avatar5.png'?>" alt="User profile picture" style="width:90px; height: 90px;">
+                
               <h3 class="profile-username text-center"><?=$this->session->userdata('usrId')?$name:''?></h3>
 
               <p class="text-muted text-center"><?=$this->session->userdata('usrId')?$nivel:''?></p>
@@ -43,9 +44,17 @@
               <strong><i class="fa fa-calendar-times-o margin-r-5"></i> Fecha de nacimiento</strong>
 
               <p class="text-muted"><?=$this->session->userdata('usrId')?date('d-m-Y',strtotime($fecnac)):''?></p>
+               <hr>
+
+              <form action="perfilController/cargarFoto" method="post" enctype="multipart/form-data">
+                <input type="file" name="foto"></input>
+                <br>
+                <input id = "carga_foto" name="carga_foto" type="submit" class="btn btn-primary" value="Cargar Foto"/>
+              </form>
             </div>
             <!-- /.box-body -->
           </div>
+
           <!-- /.box -->
         </div>
         <!-- /.col -->
@@ -215,12 +224,6 @@
                       <input type="textarea" class="form-control" id="bio" name="bio" placeholder="Biograf&iacute;a" value="<?=$this->session->userdata('usrId')?$bio:''?>">
                     </div>
                   	</div>
-                  	<div class="form-group">
-		                <label for="foto" class="col-sm-2 control-label">Cargar foto</label>
-		                <div class="col-sm-10">
-		                	<input type="file" id="foto" name="foto">
-		                </div>
-                	</div>
                   <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
@@ -230,11 +233,12 @@
                   </div>
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                    <button id="post_btn" class="btn btn-primary pull-right" onclick="enviar();">GUARDAR</button>
-					<button id="back_btn" class="btn btn-danger pull-left" onclick="volver();">CANCELAR</button>
+                     <button id="post_btn" class="btn btn-primary pull-right" onclick="enviar();">GUARDAR</button>
+					           <button id="back_btn" class="btn btn-danger pull-left" onclick="volver();">CANCELAR</button>
                     </div>
                   </div>
                 </form>
+                <br><hr>
               </div>
               <!-- /.tab-pane -->
             </div>

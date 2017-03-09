@@ -5,7 +5,18 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
             parent::__construct();
             $this->load->database();
         }
+
+        public function insert($registro){
+            $this->db->set($registro);
+            $this->db->insert('usuario');
+        }
         
+        public function update($registro){
+        $this->db->set($registro);
+        $this->db->where('email',$registro['email']);
+        $this->db->update('usuario');
+        }
+        /*
         function cargaMenu(){
             $this->db->select('m.glosa_menu');
             $this->db->from('tb_menu m');
@@ -26,7 +37,7 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
             $resultado = $consulta->row();
             return $resultado;
         }
-
+        */
         function cargaMensajeBienvenida(){
             $this->db->select('imagen,mensaje');
             $this->db->from('mensajes_bienvenida');
@@ -45,6 +56,11 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
         function getUsuarioById($id){
             $this->db->where('id', $id);
             return $this->db->get('tb_perfil')->row();
+        }
+
+        function getUsuarioByEmail($email){
+            $this->db->where('email',$email);
+            return $this->db->get('usuario')->row();
         }
 
         function getLogin($user, $pass){
