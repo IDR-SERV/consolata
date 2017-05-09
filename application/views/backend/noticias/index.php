@@ -13,7 +13,8 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
-                <tr>
+                <tr >
+                  <th class="hidden">ID</th>
                   <th>Título</th>
                   <th>Autor</th>
                   <th>Agregar imagen</th>
@@ -25,26 +26,39 @@
                 <?php if(!$noticias){ ?>
                 <tr><td colspan="5" class="text-primary text-center"><h1>NO HAY REGISTROS CARGADOS</h1></td></tr>
                 <?php }else{ ?>
-                <?php foreach($noticias as $fila) {?>
+                <?php for($i = 0; $i < count($noticias); $i++) {?>
                 <tr>
-                  <td><?= $fila->titulo ?></td>
-                  <td><?= $fila->email ?></td>
-                  <td><button id="selector-imagen" class="btn btn-success">Seleccione</button></td>
-                  <td><?= $fila->fecha_creacion ?></td>
+                  <td class="hidden"><?= $noticias[$i]->id; ?></td>
+                  <td><?= $noticias[$i]->titulo ?></td>
+                  <td><?= $noticias[$i]->email ?></td>
+                  <td class="text-center">
+                  <form name="frm_carga_foto" action="noticiasController/cargar_imagen" class="form-inline" method="post" enctype="multipart/form-data">
+                  <div class="input-group">
+                    <input type="file" name="foto_noticia" class="pull-left filestyle form-control" data-buttonText="Cargar" data-buttonName="btn-primary" data-buttonBefore="true" data-badge="false" data-buttonSize="sm"></input>
+                    <br>
+                    <input type="hidden" name="idNoticia" value="<?= $noticias[$i]->id; ?>"></input>
+                    <span class="input-group-btn"><input id = "carga_foto" name="carga_foto" type="submit" class="btn btn-primary form-control pull-right" value="OK"></input></span>
+                    </div>
+                  </form>
+
+                  </td>
+                  <td><?= $noticias[$i]->fecha_creacion ?></td>
                   <td style="width: 130px; text-align: center;">
-                    <a href="#" title="Leer"><i class="glyphicon glyphicon-eye-open text-success"></i></a>
+                    <a href="<?= base_url().'noticiasController/ver_noticia/'.$noticias[$i]->id ?>" title="Leer"><i class="glyphicon glyphicon-eye-open text-success"></i></a>
                     &nbsp;
-                    <a href="#" title="Editar"><i class="glyphicon glyphicon-pencil text-primary"></i></a>
+                    <a href="<?= base_url().'noticiasController/editar_noticia/'.$noticias[$i]->id ?>" title="Editar"><i class="glyphicon glyphicon-pencil text-primary"></i></a>
                     &nbsp;
                     <?php if($nivel == 'ADMINISTRADOR') {?>
-                    <a href="#" title="Eliminar"><i class="glyphicon glyphicon-remove-sign text-danger"></i></a>
+                    <a class="btn_eliminar_noticias" href="<?= base_url().'noticiasController/eliminar_noticia/'.$noticias[$i]->id ?>" title="Eliminar"><i class="glyphicon glyphicon-remove-sign text-danger"></i></a>
                     <?php } ?>
                   </td>
                 </tr>
+
                 <?php } }?>
                 <tr>
                 </tbody>
               </table>
+              <?= $pag ?>
             </div>
             <!-- /.box-body -->
           </div>
@@ -92,13 +106,31 @@
     </div>
     <!-- /.modal -->
 
+     <!--
+    ESTE ES EL MODAL DONDE SE CARGA LA NOTICIA
+    Este modal se cargará con un ajax
+    -->
+     
+
 
 <script>
 
 function m_nueva_noticia(){
-  $("#modal_nueva noticia").modal("show");
+  $("#modal_nueva_noticia").modal("show");
+  $("#modal_cargar_foto").modal("show");
 }
 
+
+
+  $('.btn_eliminar_noticias').each(function(){
+      var href = $(this).attr('href');
+      $(this).attr('href','javascript:void(0)');
+      $(this).click(function(){
+        if(confirm('Confirme que desea eliminar este registro')){
+          location.href = href;
+        }
+      });
+    });
 
   $(document).ready(function () {
     $("#example1").DataTable();
@@ -109,9 +141,10 @@ function m_nueva_noticia(){
       "ordering": true,
       "info": true,
       "autoWidth": false
-    });
+
+  });
+
 
     $(":file").filestyle('buttonText', 'Seleccione Imagen');
-
   });
 </script>

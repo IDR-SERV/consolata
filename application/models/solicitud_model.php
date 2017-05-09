@@ -1,38 +1,36 @@
 <?php
 	if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Perfil_model extends CI_Model{
+	class Solicitud_Model extends CI_Model{
 		function __construct(){
 			parent::__construct();
 		}//fin del construct
 
 		public function all(){
-			$query = $this->db->get('tb_perfil');
+			$query = $this->db->get('solicitud');
 			return $query->result();
 		}
 
 		public function find($id){
 			$this->db->where('id', $id);
-			return $this->db->get('tb_perfil')->row();
+			return $this->db->get('solicitud')->row();
 		}
 
 		public function insert($registro){
 			$this->db->set($registro);
-			$this->db->insert('tb_perfil');
+			$this->db->insert('solicitud');
 		}
 
-		public function update($registro){
+		public function update($registro, $id){
 			$this->db->set($registro);
-			$this->db->where('usuario_id',$registro['usuario_id']);
-			$this->db->update('tb_perfil');
-		}
-
-		public function delete_p($id){
 			$this->db->where('id',$id);
-			$this->db->delete('tb_perfil');
+			$this->db->update('solicitud');
 		}
 
-		
-
+		public function delete($id){
+			$this->db->where('id',$id);
+			$this->db->delete('solicitud');
+		}
 	}//fin de la clase
+
 ?>

@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+//A.M.D.G.
 class Welcome extends CI_Controller {
 
 	function __construct(){
@@ -15,4 +15,8 @@ class Welcome extends CI_Controller {
             $data['img'] = $this->inicializar->addFrontimg();
             $this->load->view('frontend/index',$data);
 	}
+
+    public function cargaNoticias(){
+        
+    }//fin de cargaNoticias
 }

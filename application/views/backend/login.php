@@ -36,8 +36,8 @@
 								<?=form_submit(array('name'=>'Aceptar', 'id'=>'aceptar','value'=>'Aceptar'))?>
 
 								<div class="signin-agileits-bottom"> 
-									<p><a href="#">Olvid&eacute; mi contrase&ntilde;a</a></p>  
-									<p><a href="activacion-cuenta">Activar mi cuenta</a></p>    
+									<p><a id="btn_olvide_clave" href="#">Olvid&eacute; mi contrase&ntilde;a</a></p>  
+									<p><a href="<?=base_url()?>activacion-cuenta">Activar mi cuenta</a></p>    
 								</div> 
 								
 							<?= form_close(); ?>
@@ -75,7 +75,56 @@
 	</div>	
 	<!-- //main --> 
 </body>
+
+<div class="modal modal-primary fade" id="modal_restaurar_clave" tabindex="-1" hidden="true" role="dialog">
+  <div class="modal-dialog"> 
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><span class="glyphicon glyphicon-info-sign"></span> Restaurar contrase&ntilde;a</h4>
+      </div>
+      <div class="modal-body">
+          <form name="frm_restaurar_clave" id="frm_restaurar_clave" action="loginController/restaurarClave" method="post">
+          	<div class="form-group">
+              <label>Seleccione usuario</label>
+              <select name="nick-usuario" class="form-control">
+              	<option name="id-usuario" value="0">Seleccione...</option>
+              	<?php 
+              	foreach($usuarios as $usr){
+              	?>
+              	<option value="<?= $usr->email ?>"><?= $usr->email ?></option>
+              	<?php 
+              	} 
+              	?>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ingrese contrase&ntilde;a nueva</label>
+              <input name="clave-nueva" id="clave-nueva" type="password" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Confirme contrase&ntilde;a nueva</label>
+             <input name="rep-clave-nueva" id="rep-clave-nueva" type="password" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+                <button name="guardar-clave-nueva" id="guardar-clave-nueva" type="submit" class="btn btn-outline">Guardar</button>
+            </div>
+          </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
 <script type="text/javascript">
     $('#home').submit
+    $('#btn_olvide_clave').click(function(){
+    	$("#modal_restaurar_clave").modal("show");
+    });
 </script>
 </html>

@@ -1,5 +1,4 @@
 <!--A.M.D.G.-->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,7 +100,11 @@
                 <p>
                   <?php
                     if($this->session->userdata('usrId') != '')
-                      echo $name ." " . $lastName;
+                      if($name == 'Configure su perfil'){
+                          echo $name;
+                      }else{
+                          echo $name ." " . $lastName;
+                      }
                     else
                       '';
                   ?>
@@ -127,10 +130,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="perfil" class="btn btn-default btn-flat">Perfil</a>
+                  <a href="<?=base_url()?>perfil" class="btn btn-default btn-flat">Perfil</a>
                 </div>
                 <div class="pull-right">
-                  <a href="salir" class="btn btn-default btn-flat">Salir</a>
+                  <a href="<?=base_url()?>salir" class="btn btn-default btn-flat">Salir</a>
                 </div>
               </li>
             </ul>
@@ -154,17 +157,24 @@
         </div>
         <div class="pull-left info">
           <p>
-          <?= 
-          $this->session->userdata('usrId') != ''?$name.' '.$lastName: 'Perfil no configurado'
+          <?php
+            if($this->session->userdata('usrId') != '')
+              if($name == 'Configure su perfil'){
+                  echo '<a href="' . base_url() . 'perfil">' . $name . '</a>';
+              }else{
+                  echo $name ." " . $lastName;
+              }
+            else
+              'Perfil no configurado';
           ?>
           </p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
         </div>
       </div>
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
+          <input type="text" name="q" class="form-control" placeholder="Buscar...">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
@@ -179,7 +189,7 @@
       <ul class="sidebar-menu">
         <li class="header">MENU</li>
         <?php foreach($partentMenu as $parent):?>
-          <li class="active treeview"><a href="#"><i class="<?= $parent->clase ? $parent->clase : ''; ?>"></i> <span><?= $parent->name?$parent->name:''; ?></span>
+          <li class="treeview"><a href="#"><i class="<?= $parent->clase ? $parent->clase : ''; ?>"></i> <span><?= $parent->name?$parent->name:''; ?></span>
           <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>
           </span>
@@ -187,7 +197,7 @@
           <?php if(count($this->menu_model->childMenu($parent->id)) > 0) { ?>
             <ul class="treeview-menu">
               <?php foreach($this->menu_model->childMenu($parent->id) as $child) { ?>
-              <li><a href="<?= $child->path ?>"><i class="<?= $child->clase?$child->clase:'fa fa-circle-o' ?>"></i> <?= $child->name?$child->name:''; ?></a></li>
+              <li><a href="<?= base_url().$child->path ?>"><i class="<?= $child->clase?$child->clase:'fa fa-circle-o' ?>"></i> <?= $child->name?$child->name:''; ?></a></li>
               <?php } ?>
             </ul>
           <?php } ?>
@@ -329,15 +339,15 @@
       <!-- /.tab-pane -->
       <!-- Settings tab content -->
       <div class="tab-pane" id="control-sidebar-settings-tab">
-        <form method="post">
-          <h3 class="control-sidebar-heading">Configuraciones</h3>
 
+          <h3 class="control-sidebar-heading">Configuraciones</h3>
+          <?php if($nivel == 'ADMINISTRADOR') {?>
           <div class="form-group">
               <p>
-                  <button class="btn btn-primary" style="width: 100%;">Crear Usuario</button>
+                  <button id="btn_crear_usuario" class="btn btn-primary" style="width: 100%;">Crear Usuario</button>
               </p>
           </div>
-          
+          <?php } ?>
           <hr class="text-success"/>
           <!-- /.form-group -->
           <div class="form-group">
@@ -378,7 +388,7 @@
             </label>
           </div>
           <!-- /.form-group -->
-        </form>
+
       </div>
       <!-- /.tab-pane -->
       <?PHP }?>
@@ -393,11 +403,4 @@
 <?= $plg ?>
 <?= $js ?>
 <!-- jQuery 2.2.3 -->
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#menu-derecha-home").click();
-    });
-</script>
 
-</body>
-</html>

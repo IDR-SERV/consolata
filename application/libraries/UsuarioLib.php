@@ -108,14 +108,13 @@
 			$mail = $this->CI->def->getUsuarioByEmail($email);
 			//se crea el array con los datos que se modificarán
 			$data = array(
-				'email' => $email,
 				'pass' => $passRep,
 				'activado' => '1'
 			);
 			if(!$mail){
 				redirect(base_url());
 			}else{
-				$this->CI->def->update($data);
+				$this->CI->def->updateByEmail($data, $email);
 				redirect('login');
 			}
 		}
