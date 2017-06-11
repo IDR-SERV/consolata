@@ -34,10 +34,10 @@
                   <td class="text-center">
                   <form name="frm_carga_foto" action="noticiasController/cargar_imagen" class="form-inline" method="post" enctype="multipart/form-data">
                   <div class="input-group">
-                    <input type="file" name="foto_noticia" class="pull-left filestyle form-control" data-buttonText="Cargar" data-buttonName="btn-primary" data-buttonBefore="true" data-badge="false" data-buttonSize="sm"></input>
+                    <input type="file" name="foto_noticia" class="pull-left filestyle form-control" data-buttonText="Cargar" data-buttonName="btn-primary" data-buttonBefore="true" data-badge="false" data-buttonSize="sm" />
                     <br>
-                    <input type="hidden" name="idNoticia" value="<?= $noticias[$i]->id; ?>"></input>
-                    <span class="input-group-btn"><input id = "carga_foto" name="carga_foto" type="submit" class="btn btn-primary form-control pull-right" value="OK"></input></span>
+                    <input type="hidden" name="idNoticia" value="<?= $noticias[$i]->id; ?>" />
+                    <span class="input-group-btn"><input id = "carga_foto" name="carga_foto" type="submit" class="btn btn-primary form-control pull-right" value="OK"/></span>
                     </div>
                   </form>
 

@@ -196,3 +196,5 @@ ALTER TABLE `solicitud` ADD INDEX(`id_usuario_validador`);
 ALTER TABLE `solicitud` ADD FOREIGN KEY (`id_servicio`) REFERENCES `consolata`.`servicio`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 ALTER TABLE `solicitud` ADD FOREIGN KEY (`id_usuario_solicitante`) REFERENCES `consolata`.`inquilino`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 ALTER TABLE `solicitud` ADD FOREIGN KEY (`id_usuario_validador`) REFERENCES `consolata`.`usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE `solicitud` ADD `parroquia` VARCHAR(150) NOT NULL AFTER `cantidad_personas`;

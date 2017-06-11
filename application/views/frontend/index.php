@@ -1,9 +1,7 @@
+<?php
+
+?>
 <!DOCTYPE HTML>
-<!--
-	Aesthetic by gettemplates.co
-	Twitter: http://twitter.com/gettemplateco
-	URL: http://gettemplates.co
--->
 <html>
 	<head>
 	<meta charset="utf-8">
@@ -90,7 +88,7 @@
 						<li class="has-dropdown">
 							<a href="#">Misi&oacute;n</a>
 							<ul class="dropdown">
-								<li><a href="#">Catequesis</a></li>
+								<li><a href="#gtco-features">Catequesis</a></li>
 								<li><a href="#">Homil&iacute;as</a></li>
 								<li><a href="#">Eucarist&iacute;a</a></li>
 								<li><a href="#">Confesiones</a></li>
@@ -115,7 +113,7 @@
 						<div class="display-tc">
 							<h1 class="animate-box" data-animate-effect="fadeInUp">Nuestra Se&ntilde;ora de la Consolata</h1>
 							<h2 class="animate-box" data-animate-effect="fadeInUp">Comprometidos con nuestra misi&oacute;n <em>en</em> <a href="#" target="_blank">Barquisimeto</a></h2>
-							<p class="animate-box" data-animate-effect="fadeInUp"><a href="#" class="btn btn-white btn-lg btn-outline">Vis&iacute;tanos</a></p>
+							<p class="animate-box" data-animate-effect="fadeInUp"><a href="#gtco-portfolio" class="btn btn-white btn-lg btn-outline roll">Vis&iacute;tanos</a></p>
 						</div>
 					</div>
 				</div>
@@ -129,21 +127,21 @@
 				<div class="feature feature-1 animate-box" data-animate-effect="fadeInUp">
 					<div class="feature-inner">
 						<span class="icon">
-							<i class="ti-search"></i>
+							<i class="ti-target"></i>
 						</span>
-						<h3>Search</h3>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. </p>
-						<p><a href="#" class="btn btn-white btn-outline">Learn More</a></p>
+						<h3>Colaboradores</h3>
+						<p>Puedes filtrar las publicaciones según el redactor de cada una de ellas. </p>
+						<p><a href="#" class="btn btn-white btn-outline">Leer Más</a></p>
 					</div>
 				</div>
 				<div class="feature feature-2 animate-box" data-animate-effect="fadeInUp">
 					<div class="feature-inner">
 						<span class="icon">
-							<i class="ti-announcement"></i>
+							<i class="ti-cloud"></i>
 						</span>
-						<h3>Announcdement</h3>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. </p>
-						<p><a href="#" class="btn btn-white btn-outline">Learn More</a></p>
+						<h3>Publicaciones</h3>
+						<p>Estan a tu disposición las publicaciones de los misioneros con un mensaje que busca acercarte a Dios. </p>
+						<p><a href="#" class="btn btn-white btn-outline">Leer Más</a></p>
 					</div>
 				</div>
 				<div class="feature feature-3 animate-box" data-animate-effect="fadeInUp">
@@ -151,9 +149,9 @@
 						<span class="icon">
 							<i class="ti-timer"></i>
 						</span>
-						<h3>Timer</h3>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. </p>
-						<p><a href="#" class="btn btn-white btn-outline">Learn More</a></p>
+						<h3>Calendario</h3>
+						<p>Entérate y participa de las actividades, eucaristías y retiros de nuestra casa. </p>
+						<p><a href="#" class="btn btn-white btn-outline">Leer Más</a></p>
 					</div>
 				</div>
 			</div>
@@ -172,10 +170,10 @@
 				<div class="col-md-3 col-sm-6">
 					<div class="feature-center animate-box" data-animate-effect="fadeIn">
 						<span class="icon">
-							<i class="ti-vector"></i>
+							<i class="ti-map"></i>
 						</span>
-						<h3>Pixel Perfect</h3>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. </p>
+						<h3>¿Dónde Estamos?</h3>
+						<p>Carrera 17 entre calles 48 y 49, Barquisimeto - Lara - Venezuela. </p>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6">
@@ -183,7 +181,7 @@
 						<span class="icon">
 							<i class="ti-tablet"></i>
 						</span>
-						<h3>Fully Responsive</h3>
+						<h3>¿Quiénes somos?</h3>
 						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. </p>
 					</div>
 				</div>
@@ -192,7 +190,7 @@
 						<span class="icon">
 							<i class="ti-settings"></i>
 						</span>
-						<h3>Web Development</h3>
+						<h3>¿Qué hacemos?</h3>
 						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. </p>
 					</div>
 				</div>
@@ -201,7 +199,7 @@
 						<span class="icon">
 							<i class="ti-ruler-pencil"></i>
 						</span>
-						<h3>Web Design</h3>
+						<h3>Contáctanos</h3>
 						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. </p>
 					</div>
 				</div>
@@ -221,57 +219,16 @@
 			<div class="row row-pb-md">
 				<div class="col-md-12">
 					<ul id="gtco-portfolio-list">
-						<li class="two-third animate-box" data-animate-effect="fadeIn" style="background-image: url(<?=$img?>img_1.jpg); "> 
+                        <?php for($i=0; $i<count($noticias); $i++){?>
+						<li class="two-third animate-box" data-animate-effect="fadeIn" style="background-image: url(<?= $images . $noticias[$i]->imagen ?>); ">
 							<a href="#" class="color-1">
 								<div class="case-studies-summary">
-									<span>Web Design</span>
-									<h2>View the Earth from the Outer Space</h2>
+									<span><?= $noticias[$i]->contenido ?></span>
+									<h2><?= $noticias[$i]->titulo ?></h2>
 								</div>
 							</a>
 						</li>
-						<li class="one-third animate-box" data-animate-effect="fadeIn" style="background-image: url(<?=$img?>img_2.jpg); ">
-							<a href="#" class="color-2">
-								<div class="case-studies-summary">
-									<span>Illustration</span>
-									<h2>Sleeping in the Cold Blue Water</h2>
-								</div>
-							</a>
-						</li>
-
-
-						<li class="one-half animate-box" data-animate-effect="fadeIn" style="background-image: url(<?=$img?>img_3.jpg); ">
-							<a href="#" class="color-3">
-								<div class="case-studies-summary">
-									<span>Illustration</span>
-									<h2>Building Builded by Man</h2>
-								</div>
-							</a>
-						</li>
-						<li class="one-half animate-box" data-animate-effect="fadeIn" style="background-image: url(<?=$img?>img_4.jpg); ">
-							<a href="#" class="color-4">
-								<div class="case-studies-summary">
-									<span>Web Design</span>
-									<h2>The Peaceful Place On Earth</h2>
-								</div>
-							</a>
-						</li>
-
-						<li class="one-third animate-box" data-animate-effect="fadeIn" style="background-image: url(<?=$img?>img_5.jpg); "> 
-							<a href="#" class="color-5">
-								<div class="case-studies-summary">
-									<span>Web Design</span>
-									<h2>I'm Getting Married</h2>
-								</div>
-							</a>
-						</li>
-						<li class="two-third animate-box" data-animate-effect="fadeIn" style="background-image: url(<?=$img?>img_6.jpg); ">
-							<a href="#" class="color-6">
-								<div class="case-studies-summary">
-									<span>Illustration</span>
-									<h2>Beautiful Flowers In The Air</h2>
-								</div>
-							</a>
-						</li>
+                        <?php }?>
 					</ul>		
 				</div>
 			</div>
@@ -304,7 +261,7 @@
 							<i class="ti-settings"></i>
 						</span>
 						<span class="counter js-counter" data-from="0" data-to="22070" data-speed="5000" data-refresh-interval="50">1</span>
-						<span class="counter-label">Creativity Fuel</span>
+						<span class="counter-label">Visitas</span>
 
 					</div>
 				</div>
@@ -314,7 +271,7 @@
 							<i class="ti-face-smile"></i>
 						</span>
 						<span class="counter js-counter" data-from="0" data-to="97" data-speed="5000" data-refresh-interval="50">1</span>
-						<span class="counter-label">Happy Clients</span>
+						<span class="counter-label">Usuarios</span>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInLeft">
@@ -323,7 +280,7 @@
 							<i class="ti-briefcase"></i>
 						</span>
 						<span class="counter js-counter" data-from="0" data-to="402" data-speed="5000" data-refresh-interval="50">1</span>
-						<span class="counter-label">Projects Done</span>
+						<span class="counter-label">Colaboradores</span>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInLeft">
@@ -332,7 +289,7 @@
 							<i class="ti-time"></i>
 						</span>
 						<span class="counter js-counter" data-from="0" data-to="212023" data-speed="5000" data-refresh-interval="50">1</span>
-						<span class="counter-label">Hours Spent</span>
+						<span class="counter-label">Retiros</span>
 
 					</div>
 				</div>

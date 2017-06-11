@@ -1,7 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jemel
- * Date: 24/05/2017
- * Time: 21:43
- */ 
+if(!defined('BASEPATH')) exit('No direct script access allowed');
+class FrontLib
+{
+    function __construct()
+    {
+        $this->CI = &get_instance();
+        $this->CI->load->model('noticias_model');
+    }//fin de la funcion construct
+
+}
+?>
