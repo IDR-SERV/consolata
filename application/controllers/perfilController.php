@@ -8,10 +8,15 @@
 			$this->load->model('perfil_model');
         	$this->load->model('defaultbackend_model');
         	$this->load->library('UsuarioLib');
+        	$this->load->library('calendar');
 
 		}
 
 		public function index(){
+			if($this->session->userdata('usrId') == null){
+            return false;
+        }
+
 			$id = $this->session->userdata('usrId');
         	$campos = $this->defaultbackend_model->getUsuarioById($id);
 
@@ -28,15 +33,18 @@
 	        $data['fnt'] = $this->inicializar->addFrontFonts();
 	        $data['name'] = $campos!=null?$campos->nombre:'Configure su perfil';
 	        $data['lastName'] = $campos!=null?$campos->apellido:'Configure su perfil';
-	        $data['foto'] = $campos!=null?$campos->foto_perfil:base_url() . 'avatar5.png';
+        	$data['foto'] = $campos!=null?$campos->foto_perfil:'';
 	        $data['fecnac'] = $campos!=null?$campos->fecha_nacimiento:'Configure su perfil';
 	        $data['bio']= $campos!=null?$campos->detalle_biografia:'Configure su perfil';
 	        $data['nivel'] = $this->usuariolib->get_nivel_usuario($id);
+	        $data['calendario'] = $this->calendar->generate();
 
-	        if($this->session->userdata('activo') == 1)
+	        if($this->session->userdata('activo') == 1){
 	        	$this->load->view('backend/template',$data);
-	        else
+	        	$this->load->view('backend/footer');
+	        }else{
                 redirect('activacion-cuenta');
+	        }
 			
 		}//fin Index
 
@@ -60,10 +68,12 @@
 	        $data['bio']= $campos!=null?$campos->detalle_biografia:'Configure su perfil';
 	        $data['nivel'] = $this->usuariolib->get_nivel_usuario($id);
 
-			if($this->session->userdata('activo') == 1)
+			if($this->session->userdata('activo') == 1){
 	        	$this->load->view('backend/template',$data);
-	        else
+	        	$this->load->view('backend/footer');
+	        }else{
                 redirect('activacion-cuenta');
+	        }
 		}
 
 		public function editarPerfil(){

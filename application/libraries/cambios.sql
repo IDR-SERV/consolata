@@ -92,6 +92,61 @@ CREATE TABLE noticias (
 
 -- ----------------------------------------------------------------------------------------------
 
+DROP TABLE IF EXISTS `inquilino`;
+CREATE TABLE `inquilino`(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	dni VARCHAR(20) DEFAULT NULL,
+	nombre VARCHAR(50) DEFAULT NULL,
+	apellido VARCHAR(70) DEFAULT NULL,
+	fecha_nacimiento DATE,
+	id_prm_sexo INT(11),
+	fecha_creacion DATETIME,
+	fecha_modificacion DATETIME
+) ENGINE INNODB;
+
+-- ----------------------------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `espacio`;
+CREATE TABLE `espacio`(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	glosa_espacio VARCHAR(100) DEFAULT NULL,
+	capacidad int(4) DEFAULT NULL,
+	id_prm_tipo int(11) DEFAULT NULL,
+	fecha_creacion DATETIME,
+	fecha_modificacion DATETIME
+) ENGINE INNODB;
+
+-- ----------------------------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `inquilino_espacio`;
+CREATE TABLE `inquilino_espacio`(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id_inquilino INT(11) DEFAULT NULL,
+	id_espacio INT(11) DEFAULT NULL,
+	fecha_ingreso DATETIME,
+	fecha_salida DATETIME,
+	fecha_creacion DATETIME,
+	fecha_modificacion DATETIME
+) ENGINE INNODB;
+
+-- ----------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `prm_tipo`;
+CREATE TABLE `prm_tipo`(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	glosa_tipo VARCHAR(100) DEFAULT NULL,
+	restriccion_sexo TINYINT,
+	fecha_creacion DATETIME,
+	fecha_modificacion DATETIME
+) ENGINE INNODB;
+-- ----------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `prm_sexo`;
+CREATE TABLE `prm_sexo`(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	glosa_sexo VARCHAR(20) DEFAULT NULL,
+	abrev_sexo VARCHAR(5),
+	fecha_creacion DATETIME,
+	fecha_modificacion DATETIME
+) ENGINE INNODB;
 -- ----------------------------------------------------------------------------------------------
 -- Registros
 -- ----------------------------------------------------------------------------------------------
@@ -113,3 +168,33 @@ ALTER TABLE `menu_nivel` ADD FOREIGN KEY (`nivel_id`) REFERENCES `consolata`.`ni
 ALTER TABLE `tb_perfil` ADD FOREIGN KEY (`usuario_id`) REFERENCES `consolata`.`usuario`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE `noticias` ADD `imagen` VARCHAR(100) NOT NULL AFTER `contenido`;
+
+-- tabla de servicios ofrecidos por la casa
+
+CREATE TABLE servicio (
+  id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    glosa_servicio VARCHAR(100)
+)ENGINE INNODB;
+
+-- TABLA DE SOLICITUDES
+CREATE TABLE solicitud(
+  id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_servicio INT(11),
+    id_usuario_solicitante INT(11),
+    id_usuario_validador INT(11),
+    fecha_inicio DATETIME,
+    fecha_fin DATETIME,
+    cantidad_personas INT(11),
+    fecha_creacion DATETIME,
+    fecha_modificacion DATETIME
+)ENGINE INNODB;
+
+ALTER TABLE `solicitud` ADD INDEX(`id_servicio`);
+ALTER TABLE `solicitud` ADD INDEX(`id_usuario_solicitante`);
+ALTER TABLE `solicitud` ADD INDEX(`id_usuario_validador`);
+
+ALTER TABLE `solicitud` ADD FOREIGN KEY (`id_servicio`) REFERENCES `consolata`.`servicio`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `solicitud` ADD FOREIGN KEY (`id_usuario_solicitante`) REFERENCES `consolata`.`inquilino`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `solicitud` ADD FOREIGN KEY (`id_usuario_validador`) REFERENCES `consolata`.`usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE `solicitud` ADD `parroquia` VARCHAR(150) NOT NULL AFTER `cantidad_personas`;

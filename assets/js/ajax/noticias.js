@@ -4,7 +4,7 @@ switch ("noticias"){
 		$.ajax({
 			url: "<?= base_url().noticiasController/nuevo ?>",
 			type: "POST",
-			data: $("#frm_noticias").serializa();
+			data: $("#frm_noticias").serialize();
 			success: function(respuesta){
 				alert(respuesta);
 			}

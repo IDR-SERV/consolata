@@ -7,12 +7,11 @@ class Defaultbackend extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->library('UsuarioLib');
+		$this->load->model('perfil_model');
 
         /*MENSAJES PERSONALIZADOS PARA EL ERROR EN EL LOGIN*/
         $this->form_validation->set_message('required','Debe llenar el campo %s');
         $this->form_validation->set_message('loginok','Usuario o password incorrectos');
-
-       
     }
 
 	public function index()
@@ -35,13 +34,16 @@ class Defaultbackend extends CI_Controller {
         $data['fnt'] = $this->inicializar->addFrontFonts();
         $data['name'] = $campos!=null?$campos->nombre:'Configure su perfil';
         $data['lastName'] = $campos!=null?$campos->apellido:'';
-        $data['foto'] = $campos!=null?$campos->foto_perfil:base_url() . 'avatar5.png';
+        $data['foto'] = $campos!=null?$campos->foto_perfil:'';
         $data['nivel'] = $this->usuariolib->get_nivel_usuario($id);
 
-        if($this->session->userdata('activo') == 1)
+        if($this->session->userdata('activo') == 1){
             $this->load->view('backend/template', $data);  
-        else
+            $this->load->view('backend/ajax/ajax_usuario');
+            $this->load->view('backend/footer');
+        }else{
             redirect('activacion-cuenta');
+        }
 	}
 
     public function login(){
@@ -53,6 +55,8 @@ class Defaultbackend extends CI_Controller {
         $data['img'] = $this->inicializar->formImg();
         $data['fnt'] = $this->inicializar->addFrontFonts();
         $this->load->view('backend/login', $data);
+        $this->load->view('backend/ajax/ajax_usuario');
+        $this->load->view('backend/footer');
     }
 
     public function ingresar(){
@@ -92,11 +96,15 @@ class Defaultbackend extends CI_Controller {
         $data['plg'] = $this->inicializar->addPlg();
         $data['fnt'] = $this->inicializar->addFrontFonts();
         $this->load->view('backend/activacion',$data);
+        $this->load->view('backend/ajax/ajax_usuario');
+        $this->load->view('backend/footer');
     }
 
     public function cambioClave(){
         $data['contenido'] = 'backend/perfil/ficha';
         $this->load->view('backend/template',$data);
+        $this->load->view('backend/ajax/ajax_usuario');
+        $this->load->view('backend/footer');
     }
 
     public function post_cambioClave(){
@@ -109,6 +117,87 @@ class Defaultbackend extends CI_Controller {
         else{
             redirect('perfil');
         }
+    }
+	
+	public function indexusuario(){
+		//Verificar que el usuario este logueado
+        if($this->session->userdata('usrId') == null){
+            redirect(base_url());
+        }
+		
+        $id = $this->session->userdata('usrId');
+        $campos = $this->defaultbackend_model->getUsuarioById($id);
+        $usuario = $this->defaultbackend_model->tabla_usuarios();
+		$nivel_usuario = $this->defaultbackend_model->getNiveles();
+
+        $data['partentMenu'] = $this->menu_model->partentMenu();
+        $data['contenido'] = 'backend/usuario/_usuario';//carpeta/vista
+		$data['titulo'] = 'Usuarios';
+        $data['seccion'] = $data['titulo'];
+        $data['descripcion_seccion'] = 'Listado';
+        $data['css'] = $this->inicializar->addCss();
+        $data['js'] = $this->inicializar->addJs();
+        $data['img'] = $this->inicializar->addImg();
+        $data['pic'] = $this->inicializar->addPic();
+        $data['plg'] = $this->inicializar->addPlg();
+        $data['fnt'] = $this->inicializar->addFrontFonts();
+        $data['name'] = $campos!=null?$campos->nombre:'Configure su perfil';
+        $data['lastName'] = $campos!=null?$campos->apellido:'';
+        $data['foto'] = $campos!=null?$campos->foto_perfil:'';
+        $data['nivel'] = $this->usuariolib->get_nivel_usuario($id);
+        $data['cantidad_usuarios'] = count($usuario);
+        $data['usuarios'] = $usuario;
+		$data['nivel_usuario'] = $nivel_usuario;
+		
+		$this->load->view('backend/template', $data);
+        $this->load->view('backend/ajax/ajax_usuario');
+        $this->load->view('backend/footer');
+	}
+
+    public function tablaUsuarios(){
+        $usuario = $this->defaultbackend_model->tabla_usuarios();
+        echo json_encode($usuario);
+    }
+
+    public function nuevo_usuario(){
+        //Se verifica que el usuario este logueado
+        if(!$this->session->userdata('usrId')) return false;
+
+        $resultado = $this->defaultbackend_model->insert();
+        $msg['success'] = false;
+        $msg['type'] = 'add';
+        if($resultado){
+            $msg['success'] = true;
+        }
+        echo json_encode($msg);
+    }
+	
+	public function editar_usuario(){
+		//Verificar que el usuario este logueado
+        if($this->session->userdata('usrId') == null){
+            redirect(base_url());
+        }
+		$resultado = $this->defaultbackend_model->edicion();
+        echo json_encode($resultado);
+	}
+
+    public function update_usuario(){
+        $resultado = $this->defaultbackend_model->update();
+        $msg['success'] = false;
+        $msg['type'] = 'updt';
+        if($resultado){
+            $msg['success'] = true;
+        }
+        echo json_encode($msg);
+    }//fin de la funcion
+
+    public function eliminar_usuario(){
+        $resultado = $this->defaultbackend_model->deleteUsuario();
+        $msg['success'] = false;
+        if($resultado){
+            $msg['success'] = true;
+        }
+        echo json_encode($msg);
     }
 
     public function salir(){

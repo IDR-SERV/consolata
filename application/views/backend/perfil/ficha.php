@@ -14,8 +14,9 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-
+              <a data-toggle="modal" data-target="#modal_cargar_foto">
               <img class="profile-user-img img-responsive img-circle" src="<?=$foto != ''?$pic.$foto:$pic.'avatar5.png'?>" alt="User profile picture" style="width:90px; height: 90px;">
+              </a>
                 
               <h3 class="profile-username text-center"><?=$this->session->userdata('usrId')?$name:''?></h3>
 
@@ -46,11 +47,7 @@
               <p class="text-muted"><?=$this->session->userdata('usrId')?date('d-m-Y',strtotime($fecnac)):''?></p>
                <hr>
 
-              <form action="perfilController/cargarFoto" method="post" enctype="multipart/form-data">
-                <input type="file" name="foto"></input>
-                <br>
-                <input id = "carga_foto" name="carga_foto" type="submit" class="btn btn-primary" value="Cargar Foto"/>
-              </form>
+              
             </div>
             <!-- /.box-body -->
           </div>
@@ -215,6 +212,7 @@
                   		<input type="text" class="form-control" id="fechanac" name="fechanac" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask value="<?=$this->session->userdata('usrId')?date('d-m-Y',strtotime($fecnac)):''?>">
                   		</div>
                   		</div>
+
                 	</div>
 
                   	<div class="form-group">
@@ -249,6 +247,41 @@
         <!-- /.col -->
       </div>
       <!-- /.row -->
+      <!--
+    ESTE ES EL MODAL DONDE SE CARGA LA NOTICIA
+    Este modal se cargará con un ajax
+    -->
+     <div class="modal modal-primary fade" id="modal_cargar_foto" tabindex="-1" hidden="true" role="dialog">
+      <div class="modal-dialog"> 
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><span class="glyphicon glyphicon-info-sign"></span> Cargar Foto de Perfil</h4>
+            <?php
+              $nombre_completo = '';
+              if($this->session->userdata('usrId') and $name != 'Configure su perfil'){
+                $nombre_completo = $name.' '.$lastName;
+              }else{
+                $nombre_completo = 'Configure su perfil';
+              }
+            ?>
+
+            <small class="pull-right"><b><?= $nombre_completo ?></b></small>
+          </div>
+          <div class="modal-body">
+              <form action="perfilController/cargarFoto" method="post" enctype="multipart/form-data">
+                <input type="file" name="foto"></input>
+                <br>
+                <input id = "carga_foto" name="carga_foto" type="submit" class="btn btn-primary" value="Cargar Foto"/>
+              </form>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 
     </section>
 <script type="text/javascript">

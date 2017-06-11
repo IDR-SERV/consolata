@@ -23,7 +23,7 @@
 
 		public function update($registro, $id){
 			$this->db->set($registro);
-			$this->db->where('id_usuario',$registro['id_usuario']);
+			//$this->db->where('id_usuario',$registro['id_usuario']);
 			$this->db->where('id',$id);
 			$this->db->update('noticias');
 		}
@@ -34,9 +34,11 @@
 		}
 
 		public function tablaNoticias(){
-			$this->db->select('noticias.titulo, usuario.email, noticias.contenido, noticias.fecha_creacion');
+			$id_usuario = $this->session->userdata('usrId');
+			$this->db->select('noticias.id, noticias.titulo, usuario.email, noticias.contenido, noticias.fecha_creacion');
 			$this->db->from('noticias');
 			$this->db->join('usuario', 'usuario.id = noticias.id_usuario');
+			$this->db->where('noticias.id_usuario', $id_usuario);
 			$consulta = $this->db->get();
 			$resultado = $consulta->result();
 			return $resultado;
