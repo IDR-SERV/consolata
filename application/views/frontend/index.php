@@ -1,5 +1,6 @@
 <?php
 //Este index se va  atransformar para darle una estructura tipo Dusa.com
+$variable = '';
 ?>
 <!DOCTYPE HTML>
 <html>
