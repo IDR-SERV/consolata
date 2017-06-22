@@ -63,6 +63,7 @@ CREATE TABLE `usuario` (
   `email` varchar(120) DEFAULT NULL,
   `nick` varchar(20) DEFAULT NULL,
   `pass` varchar(200) DEFAULT NULL,
+  `activado` int(11 DEFAULT NULL,
   `nivel_id`int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
@@ -147,36 +148,16 @@ CREATE TABLE `prm_sexo`(
 	fecha_creacion DATETIME,
 	fecha_modificacion DATETIME
 ) ENGINE INNODB;
--- ----------------------------------------------------------------------------------------------
--- Registros
--- ----------------------------------------------------------------------------------------------
-INSERT INTO `mensajes_bienvenida` VALUES ('1','Cristo.png','No tengais miedo','2017-01-28 17:31:41','0000-00-00 00:00:00'), 
-('2','PapaFrancisco.png','Estamos llamados a formar las conciencias, pero no a pretender sustiruirlas','2017-01-28 17:31:41','0000-00-00 00:00:00');
-
-INSERT INTO `usuario` VALUES ('1', 'JEMEL.DAVALILLO@GMAIL.COM','J21D','827ccb0eea8a706c4c34a16891f84e7b', 1, '2017-01-28 17:31:41','0000-00-00 00:00:00');
-
--- ----------------------------------------------------------------------------------------------
--- MODIFICACIONES A LAS TABLAS
--- ----------------------------------------------------------------------------------------------
-
-ALTER TABLE `usuario` ADD FOREIGN KEY (`nivel_id`) REFERENCES `consolata`.`nivel`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-ALTER TABLE `menu_nivel` ADD FOREIGN KEY (`menu_id`) REFERENCES `consolata`.`menu`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-ALTER TABLE `menu_nivel` ADD FOREIGN KEY (`nivel_id`) REFERENCES `consolata`.`nivel`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-ALTER TABLE `tb_perfil` ADD FOREIGN KEY (`usuario_id`) REFERENCES `consolata`.`usuario`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-ALTER TABLE `noticias` ADD `imagen` VARCHAR(100) NOT NULL AFTER `contenido`;
 
 -- tabla de servicios ofrecidos por la casa
-
+DROP TABLE IF EXISTS servicio;
 CREATE TABLE servicio (
   id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
     glosa_servicio VARCHAR(100)
 )ENGINE INNODB;
 
 -- TABLA DE SOLICITUDES
+DROP TABLE IF EXISTS solicitud;
 CREATE TABLE solicitud(
   id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_servicio INT(11),
@@ -189,12 +170,47 @@ CREATE TABLE solicitud(
     fecha_modificacion DATETIME
 )ENGINE INNODB;
 
+-- TABLA IMAGEN NOTICIAS
+DROP TABLE IF EXISTS imagen_noticia;
+CREATE TABLE imagen_noticia(
+    id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_noticia INT(11),
+    imagen VARCHAR(150),
+    fecha_creacion DATETIME,
+    fecha_modificacion DATETIME
+)ENGINE INNODB;
+-- ----------------------------------------------------------------------------------------------
+-- Registros
+-- ----------------------------------------------------------------------------------------------
+INSERT INTO `mensajes_bienvenida` VALUES ('1','Cristo.png','No tengais miedo','2017-01-28 17:31:41','0000-00-00 00:00:00'), 
+('2','PapaFrancisco.png','Estamos llamados a formar las conciencias, pero no a pretender sustiruirlas','2017-01-28 17:31:41','0000-00-00 00:00:00');
+
+INSERT INTO `usuario` VALUES ('1', 'JEMEL.DAVALILLO@GMAIL.COM','J21D','827ccb0eea8a706c4c34a16891f84e7b', 1, '2017-01-28 17:31:41','0000-00-00 00:00:00');
+
+-- ----------------------------------------------------------------------------------------------
+-- MODIFICACIONES A LAS TABLAS
+-- ----------------------------------------------------------------------------------------------
+
+ALTER TABLE usuario ADD FOREIGN KEY (nivel_id) REFERENCES consolata.nivel(id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `menu_nivel` ADD FOREIGN KEY (`menu_id`) REFERENCES `consolata`.`menu`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `menu_nivel` ADD FOREIGN KEY (`nivel_id`) REFERENCES `consolata`.`nivel`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `tb_perfil` ADD FOREIGN KEY (`usuario_id`) REFERENCES `consolata`.`usuario`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `noticias` ADD `imagen` VARCHAR(100) NOT NULL AFTER `contenido`;
+
 ALTER TABLE `solicitud` ADD INDEX(`id_servicio`);
+
 ALTER TABLE `solicitud` ADD INDEX(`id_usuario_solicitante`);
+
 ALTER TABLE `solicitud` ADD INDEX(`id_usuario_validador`);
 
 ALTER TABLE `solicitud` ADD FOREIGN KEY (`id_servicio`) REFERENCES `consolata`.`servicio`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
 ALTER TABLE `solicitud` ADD FOREIGN KEY (`id_usuario_solicitante`) REFERENCES `consolata`.`inquilino`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
 ALTER TABLE `solicitud` ADD FOREIGN KEY (`id_usuario_validador`) REFERENCES `consolata`.`usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 ALTER TABLE `solicitud` ADD `parroquia` VARCHAR(150) NOT NULL AFTER `cantidad_personas`;
