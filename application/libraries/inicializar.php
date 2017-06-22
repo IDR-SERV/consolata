@@ -1,5 +1,10 @@
 <?php
     class Inicializar{
+        public function titulo(){
+            $data = "N. S. Cosolata";
+            return $data;
+        }
+
         public function addCss(){
             $data = '';
             $data .= '<link href="' . base_url() . 'assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>';

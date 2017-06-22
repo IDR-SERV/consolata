@@ -12,6 +12,8 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
             $this->load->helper('url');
+
+            $data['titulo'] = $this->inicializar->titulo();
             $data['css'] = $this->inicializar->addFrontCss();
             $data['js'] = $this->inicializar->addFrontJs();
             $data['img'] = $this->inicializar->addFrontimg();
