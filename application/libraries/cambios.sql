@@ -12,8 +12,8 @@ CREATE TABLE `mensajes_bienvenida` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 -- ----------------------------------------------------------------------------------------------
-DROP TABLE IF EXISTS `menu_nivel`;
-CREATE TABLE `menu_nivel` (
+DROP TABLE IF EXISTS `nivel_menu`;
+CREATE TABLE `nivel_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `menu_id` int(11) DEFAULT NULL,
   `nivel_id` int(11) DEFAULT NULL,

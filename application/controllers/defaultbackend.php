@@ -8,6 +8,7 @@ class Defaultbackend extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('UsuarioLib');
 		$this->load->model('perfil_model');
+        $this->load->model('menu_model');
 
         /*MENSAJES PERSONALIZADOS PARA EL ERROR EN EL LOGIN*/
         $this->form_validation->set_message('required','Debe llenar el campo %s');
@@ -38,7 +39,7 @@ class Defaultbackend extends CI_Controller {
         $data['nivel'] = $this->usuariolib->get_nivel_usuario($id);
 
         if($this->session->userdata('activo') == 1){
-            $this->load->view('backend/template', $data);  
+            $this->load->view('backend/template', $data);
             $this->load->view('backend/ajax/ajax_usuario');
             $this->load->view('backend/footer');
         }else{
